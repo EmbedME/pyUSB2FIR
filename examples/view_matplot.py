@@ -1,7 +1,7 @@
 #!usr/bin/python
 
 import matplotlib
-matplotlib.use('GTKAgg') 
+#matplotlib.use('GTKAgg') 
 import matplotlib.pyplot as plt
 from pyusb2fir import USB2FIR
 import numpy as np

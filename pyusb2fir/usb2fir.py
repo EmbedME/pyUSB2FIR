@@ -145,7 +145,7 @@ class MLXCommonParameters:
                 pixelid = i * 32 + j
                 a = uint6_to_int6((eepromdata[0x40 + pixelid] & 0x03F0) >> 4)
                 a = alphaRef + (accRow[i] << accRowScale) + (accColumn[j] << accColumnScale) + a * (1 << accRemScale)
-                a = (a + 0.0) / (1 << alphaScale)
+                a = (a + 0.0) / (long(1) << alphaScale)
                 self.alpha.append(a)
 
 
@@ -367,8 +367,8 @@ class USB2FIR(object):
 
         tr = ta - 8;
 
-        ta4 = pow((ta + 273.15), 4)
-        tr4 = pow((tr + 273.15), 4)        
+        ta4 = np.power((ta + 273.15), 4)
+        tr4 = np.power((tr + 273.15), 4)        
         taTr = tr4 - (tr4 - ta4) / emissivity
  
         gain = (self.commonParameters.gainEE + 0.0) / uint16_to_int16(regdata[BF_HEADER_REG_GAIN])
@@ -390,7 +390,7 @@ class USB2FIR(object):
 
                 alphaCompensated = (self.commonParameters.alpha[pixelidx] - self.commonParameters.tgc * self.commonParameters.cpAlpha[subpage]) * (1 + self.commonParameters.KsTa * (ta - 25));
 
-                Sx = pow(alphaCompensated, 3) * (irData + alphaCompensated * taTr);
+                Sx = np.power(alphaCompensated, 3) * (irData + alphaCompensated * taTr);
                 Sx = np.sqrt(np.sqrt(Sx)) * self.commonParameters.ksTo[1];
 
                 To = np.sqrt(np.sqrt(irData / (alphaCompensated * (1 - self.commonParameters.ksTo[1] * 273.15) + Sx) + taTr)) - 273.15;
