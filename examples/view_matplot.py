@@ -23,7 +23,7 @@ try:
 
         u2f.updateFrame(frame)
 
-        ir = frame.reshape((24, 32))
+        ir = frame.reshape((24, 32))[:, ::-1]
 
         graph.set_data(ir)
         plt.draw()
