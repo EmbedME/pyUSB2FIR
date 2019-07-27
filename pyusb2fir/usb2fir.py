@@ -133,11 +133,11 @@ class MLXCommonParameters:
 
         accRow = []
         for i in range(24):
-            accRow.append(uint4_to_int4((eepromdata[0x22 + i / 4] >> ((i % 4) * 4)) & 0xF))
+            accRow.append(uint4_to_int4((eepromdata[0x22 + i // 4] >> ((i % 4) * 4)) & 0xF))
 
         accColumn = []
         for i in range(32):
-            accColumn.append(uint4_to_int4((eepromdata[0x28 + i / 4] >> ((i % 4) * 4)) & 0xF))
+            accColumn.append(uint4_to_int4((eepromdata[0x28 + i // 4] >> ((i % 4) * 4)) & 0xF))
 
         self.alpha = []
         for i in range(24):
