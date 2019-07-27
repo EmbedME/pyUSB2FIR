@@ -108,11 +108,11 @@ class MLXCommonParameters:
 
         occRow = []
         for i in range(24):
-            occRow.append(uint4_to_int4((eepromdata[0x12 + i / 4] >> ((i % 4) * 4)) & 0xF))
+            occRow.append(uint4_to_int4((eepromdata[0x12 + i // 4] >> ((i % 4) * 4)) & 0xF))
 
         occColumn = []
         for i in range(32):
-            occColumn.append(uint4_to_int4((eepromdata[0x18 + i / 4] >> ((i % 4) * 4)) & 0xF))
+            occColumn.append(uint4_to_int4((eepromdata[0x18 + i // 4] >> ((i % 4) * 4)) & 0xF))
 
         self.offset = []
         for i in range(24):
@@ -145,7 +145,7 @@ class MLXCommonParameters:
                 pixelid = i * 32 + j
                 a = uint6_to_int6((eepromdata[0x40 + pixelid] & 0x03F0) >> 4)
                 a = alphaRef + (accRow[i] << accRowScale) + (accColumn[j] << accColumnScale) + a * (1 << accRemScale)
-                a = (a + 0.0) / (long(1) << alphaScale)
+                a = (a + 0.0) / (int(1) << alphaScale)
                 self.alpha.append(a)
 
 
