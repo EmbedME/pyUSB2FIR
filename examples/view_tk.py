@@ -1,7 +1,9 @@
-import Tkinter as tk
-import Queue
-from pyusb2fir import USB2FIR
-import threading 
+import queue
+import threading
+import tkinter as tk
+
+from pyUSB2FIR.pyusb2fir.usb2fir import USB2FIR
+
 
 def rgb(minimum, maximum, value):
     minimum, maximum = float(minimum), float(maximum)
@@ -37,9 +39,7 @@ class TempView(tk.Tk):
         self.label_temp = tk.Label(textvariable=self.tempstr)
         self.label_temp.pack()
 
-
-        self.queue = Queue.Queue()
-
+        self.queue = queue.Queue()
         self.updateMap()
 
     def updateMap(self):
@@ -47,7 +47,7 @@ class TempView(tk.Tk):
         try:
             tempvalues = self.queue.get_nowait()
             self.setTempValues(tempvalues)
-        except Queue.Empty:
+        except queue.Empty:
             pass
 
         self.after(100, self.updateMap)
@@ -95,4 +95,7 @@ t = threading.Thread(target=u2f_fetcher, args=(u2f, app.queue,))
 t.start()
 
 app.mainloop()
+
 t.do_run = False
+
+u2f.close()

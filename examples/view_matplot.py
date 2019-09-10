@@ -12,15 +12,14 @@ frame = u2f.initializeFrame()
 plt.ion()
 
 ir = frame.reshape((24, 32))
-graph = plt.imshow(ir,interpolation='none')
+graph = plt.imshow(ir, interpolation='none')
 
 plt.colorbar()
-plt.clim(18,35)
+plt.clim(18, 35)
 plt.draw()
 
 try:
-    while(1):
-
+    while 1:
         u2f.updateFrame(frame)
 
         ir = frame.reshape((24, 32))[:, ::-1]
@@ -30,7 +29,8 @@ try:
         plt.pause(0.0001)
 
 except KeyboardInterrupt:
-        print("CTRL-C: Program Stopping via Keyboard Interrupt...")
+    u2f.close()
+    print("CTRL-C: Program Stopping via Keyboard Interrupt...")
 
 finally:
         print("Exiting Loop") 
