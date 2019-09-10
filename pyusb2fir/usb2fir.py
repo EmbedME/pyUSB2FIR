@@ -408,5 +408,7 @@ class USB2FIR(object):
                 frame[pixelidx] = To
                 pixelidx = pixelidx + 2
                 
+    def close(self):
+        self.usbhandle.close()
 
             
